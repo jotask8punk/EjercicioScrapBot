@@ -1,6 +1,7 @@
 from flask import Flask
 from scraper import scraper
 from TelegramConnect import EnvioTelegram
+from CapaBD import capabd
 from config import appID_telegram, appAPIHash_telegram, num_telefono_bot, TOKEN_TELEGRAM
 
 app = Flask(__name__)
@@ -8,7 +9,14 @@ app = Flask(__name__)
 try:
     claseScraper = scraper()
     cantDisp = claseScraper.EscrapearObjetivo()
-    print(cantDisp)
+    capadats = capabd()
+    ultimoDisp = capadats.LeerUltimo()
+    if ultimoDisp == "" or ultimoDisp != cantDisp:
+        capadats.insertarHistorico(cantDisp)
+        ''' aquí debería usar el código de telegram'''
+    else:
+        capadats.insertarHistorico(cantDisp)
+
     '''
     mensajeador = EnvioTelegram()
     listaDest = mensajeador.ListaDestinatarios(TOKEN_TELEGRAM)
