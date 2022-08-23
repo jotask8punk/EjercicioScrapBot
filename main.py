@@ -1,12 +1,14 @@
 from flask import Flask
 from TelegramConnect import EnvioTelegram
-from config import appID_telegram, appAPIHash_telegram, num_telefono_bot
+from config import appID_telegram, appAPIHash_telegram, num_telefono_bot, TOKEN_TELEGRAM
 
 app = Flask(__name__)
 
 try:
     mensajeador = EnvioTelegram()
-    mensajeador.EnviarMensaje(num_telefono_bot, 'JotaMendoza1987', appID_telegram, appAPIHash_telegram, 'mensaje prueba')
+    listaDest = mensajeador.ListaDestinatarios(TOKEN_TELEGRAM)
+    for UsuId in listaDest:
+        mensajeador.EnviarMensaje(num_telefono_bot, UsuId, appID_telegram, appAPIHash_telegram, 'mensaje prueba')
 
     print("Finalizado con éxito")
 except (KeyError, TypeError) as e:
