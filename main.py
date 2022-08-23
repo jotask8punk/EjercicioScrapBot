@@ -1,14 +1,20 @@
 from flask import Flask
+from scraper import scraper
 from TelegramConnect import EnvioTelegram
 from config import appID_telegram, appAPIHash_telegram, num_telefono_bot, TOKEN_TELEGRAM
 
 app = Flask(__name__)
 
 try:
+    claseScraper = scraper()
+    cantDisp = claseScraper.EscrapearObjetivo()
+    print(cantDisp)
+    '''
     mensajeador = EnvioTelegram()
     listaDest = mensajeador.ListaDestinatarios(TOKEN_TELEGRAM)
     for UsuId in listaDest:
         mensajeador.EnviarMensaje(num_telefono_bot, UsuId, appID_telegram, appAPIHash_telegram, 'mensaje prueba')
+    '''
 
     print("Finalizado con éxito")
 except (KeyError, TypeError) as e:
