@@ -13,22 +13,20 @@ try:
     ultimoDisp = capadats.LeerUltimo()
     if ultimoDisp == "" or ultimoDisp != cantDisp:
         capadats.insertarHistorico(cantDisp)
-        ''' aquí debería usar el código de telegram'''
+        mensajeador = EnvioTelegram()
+        listaDest = mensajeador.ListaDestinatarios(TOKEN_TELEGRAM)
+        for UsuId in listaDest:
+            mensajeador.EnviarMensaje(num_telefono_bot, UsuId, appID_telegram, appAPIHash_telegram,
+                                      'El artículo Impresora Multifuncional Epson Ecotank L3110 ha actualizado su disponible: ' + cantDisp)
     else:
         capadats.insertarHistorico(cantDisp)
-
-    '''
-    mensajeador = EnvioTelegram()
-    listaDest = mensajeador.ListaDestinatarios(TOKEN_TELEGRAM)
-    for UsuId in listaDest:
-        mensajeador.EnviarMensaje(num_telefono_bot, UsuId, appID_telegram, appAPIHash_telegram, 'mensaje prueba')
-    '''
 
     print("Finalizado con éxito")
 except (KeyError, TypeError) as e:
     print(str(e))
 except Exception as e:
     print(str(e))
+
 
 ''' Aquí le indicamos para que ejecute la aplicación principal de nuestra solución.'''
 if __name__ == '__main__':

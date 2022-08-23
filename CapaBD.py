@@ -12,11 +12,15 @@ class capabd:
             })
 
     def LeerUltimo(self):
-        coll=""
+        '''coll=""'''
         try:
             db_client = MongoManager()
-            coll = db_client.db.get_collection("historico_disponibles").find().sort({'fechaHora': -1}).limit(1)
-            return coll
+            coll = db_client.db["historico_disponibles"].find()
+            datos = coll.sort('fechaHora', -1).limit(1)
+            a=0
+            for data in datos:
+                a=data["disponibles"]
+            return a
         except Exception as e:
             print(str(e))
-            return coll
+            return ""
